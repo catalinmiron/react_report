@@ -19,9 +19,16 @@ class App extends Component {
   }
 
   loadData() {
-    database.ref('/').once('value', (snapshot) => {
-      this.setState ({suites: snapshot.val()});
-    })
+    if (!this.state.suites || JSON.stringify(this.state.suites) === "{}") {
+      database.ref('/suites/').once('value', (snapshot) => {
+        this.setState ({suites: snapshot.val()});
+      })
+    }
+    else {
+      database.ref('/').on('child_changed', (snapshot) => {
+        this.setState({suites: snapshot.val()});
+      })
+    }
   }
 
   componentDidMount() {
@@ -36,12 +43,11 @@ class App extends Component {
     } else {
       this.loadData()
     }
-
   }
 
   onSelect(buildSelection) {
     if (this.state.buildSelection) {
-      database.ref(`/${this.state.buildSelection.selectedSuite}/${this.state.buildSelection.selectedBuild}/`).off()
+      database.ref(`suites/${this.state.buildSelection.selectedSuite}/${this.state.buildSelection.selectedBuild}/`).off()
     }
 
     this.setState ({
@@ -65,17 +71,17 @@ class App extends Component {
     } else {
       if (!this.state.suite_loaded) {
         return(
-            <div className='App'>
+            <div className='App' onMouseOver={this.loadData}>
               <div className="no-suite-loaded">
                 <h1>Select suite and build</h1>
-                <SuiteSelectorPane suites={this.state.suites} onSelect={this.onSelect} />
+                <SuiteSelectorPane suites={this.state.suites} onSelect={this.onSelect}/>
               </div>
             </div>
         );
       } else {
         return (
-            <div className='App'>
-              <SuiteSelectorPane suites={this.state.suites} onSelect={this.onSelect} />
+            <div className='App' onMouseOver={this.loadData}>
+              <SuiteSelectorPane suites={this.state.suites} onSelect={this.onSelect}/>
               {this.props.children}
             </div>
         );

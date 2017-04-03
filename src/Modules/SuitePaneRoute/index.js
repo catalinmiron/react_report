@@ -51,7 +51,7 @@ class SuitePaneRoute extends Component {
     }
 
     getBuildData() {
-        database.ref(`/${this.props.params.selectedSuite}/${this.props.params.selectedBuild}/`).on('value', (snapshot) => {
+        database.ref(`/suites/${this.props.params.selectedSuite}/${this.props.params.selectedBuild}/`).on('value', (snapshot) => {
             this.setState ({
                 suite: snapshot.val() ? snapshot.val().executions : {},
                 additional_info: snapshot.val() ? snapshot.val().additional_info : {}
@@ -62,13 +62,13 @@ class SuitePaneRoute extends Component {
     onValidate(value) {
         var spec_found = null;
 
-        database.ref(`/${this.props.params.selectedSuite}/${this.props.params.selectedBuild}/executions/${value.specName}`).once('value', (snaphot) => {
+        database.ref(`/suites/${this.props.params.selectedSuite}/${this.props.params.selectedBuild}/executions/${value.specName}`).once('value', (snaphot) => {
             spec_found = snaphot.val();
         });
 
         if (spec_found) {
             const status = value.validated ? 'warning' : 'failed';
-            database.ref(`/${this.props.params.selectedSuite}/${this.props.params.selectedBuild}/executions/${value.specName}`).update({
+            database.ref(`/suites/${this.props.params.selectedSuite}/${this.props.params.selectedBuild}/executions/${value.specName}`).update({
                 validated: value.validated,
                 status: status
             })
