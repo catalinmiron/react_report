@@ -52,7 +52,7 @@ class SuitePaneRoute extends Component {
     getBuildData() {
         database.ref(`builds/${this.props.params.selectedSuite}_${this.props.params.selectedBuild}/`).on('value', (snapshot) => {
             this.setState ({
-                suite: snapshot.val() ? snapshot.val().executions : {},
+                suite: snapshot.val() ? snapshot.val().gstexecutions : {},
                 additional_info: snapshot.val() ? snapshot.val().additional_info : {}
             });
         });
@@ -88,6 +88,6 @@ class SuitePaneRoute extends Component {
             />
         )
     }
-};
+}
 
 export default SuitePaneRoute;

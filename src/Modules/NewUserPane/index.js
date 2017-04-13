@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import UserPane from './UserFieldsPane/index';
 import OrganizationPane from './OrganizationFieldsPane/index';
 import SubscriptionPane from './SubscriptionFieldsPane/index';
-//import jenkins from '../../jenkins'
+import Siringa from '../../siringa'
 
 
 class NewUserPane extends Component {
@@ -58,16 +58,11 @@ class NewUserPane extends Component {
     }
 
     onSend () {
-        // jenkins.send({
-        //     features: this.state.selectedFeatures.join(),
-        //     environment: this.state.environment,
-        //     branch: this.state.branch
-        // }, (response) => {
-        //     this.setState({
-        //         selectedFeatures: []
-        //     });
-        //     alert('The suite has been launched look for it in "Qa Test Job" suite');
-        // });
+        Siringa.create_user(
+            this.state
+        , (response) => {
+            console.log(response);
+        });
     }
 
     renderTextFields () {

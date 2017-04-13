@@ -76,6 +76,7 @@ class SubscriptionFieldsPane extends Component {
                         value={this.state.product}
                         onChange={this.onProductChange}
                         type="textField"
+                        placeholder="ex: business-1y"
                     />
                 </div>
 
