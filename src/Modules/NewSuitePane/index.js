@@ -60,7 +60,11 @@ class NewSuitePane extends Component {
             features: this.state.selectedFeatures.join(),
             environment: this.state.environment,
             branch: this.state.branch
-        }, (response) => {
+        }, (error, response) => {
+            if (error){
+                console.log("There is an error", error)
+            }
+            console.log("Response", response);
             this.setState({
                 selectedFeatures: []
             });

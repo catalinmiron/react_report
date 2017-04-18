@@ -6,7 +6,7 @@ var Siringa = class {
     }
 
     create_user = function(params, callback) {
-        const host = `https://${params.environment}.staging.redbooth.com/app/test/load_definition/pb_create_user_with_subscription`;
+        const host = `http://localhost:3000/app/test/load_definition/pb_create_user_with_subscription`;
         const parameters = {
             "siringa_args": {
                 //user data
@@ -26,8 +26,8 @@ var Siringa = class {
             }
         };
 
-        jsonp(host, parameters, 'callback', function (json) {
-            callback(json)
+        jsonp(host, parameters, 'callback', function (error, response) {
+            callback(error, response)
         })
     }
 };

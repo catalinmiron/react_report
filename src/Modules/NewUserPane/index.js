@@ -60,8 +60,12 @@ class NewUserPane extends Component {
     onSend () {
         Siringa.create_user(
             this.state
-        , (response) => {
-            console.log(response);
+        , (error, response) => {
+            if(error){
+                console.log("There is an error: \n", error)
+            } else {
+                console.log("Here is the response: \n", response)
+            }
         });
     }
 
